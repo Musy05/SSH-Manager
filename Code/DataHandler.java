@@ -1,5 +1,3 @@
-// DataHandler.java
-
 import javax.crypto.SecretKey;
 import javax.swing.*;
 import java.awt.*;
@@ -105,6 +103,17 @@ public class DataHandler {
         } catch (Exception e) {
             e.printStackTrace(); // Gestisce l'eccezione generica
         }
+
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.weightx = 1.0;
+        gbc.weighty = 1.0;
+        gbc.fill = GridBagConstraints.BOTH;
+        MainClass.contentPanel.add(Box.createGlue(), gbc); // Aggiungi uno spazio che riempie il vuoto
+
+        MainClass.contentPanel.revalidate();
+        MainClass.contentPanel.repaint();
     }
 
     public static void addConnection() {

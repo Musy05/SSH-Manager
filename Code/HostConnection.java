@@ -8,23 +8,24 @@ import javax.swing.SwingUtilities;
 
 public class HostConnection {
 
-        public static void connectToSSH(String ip, String username, String password) {
-            try {
-                // Usa ProcessBuilder per costruire ed eseguire il comando
-                ProcessBuilder processBuilder = new ProcessBuilder("wscript", "connect_ssh.vbs", ip, username, password);
-                
-                // Esegui il comando
-                Process process = processBuilder.start();
-                
-                // Attendi che il processo termini
-                process.waitFor();
-                
-            } catch (IOException | InterruptedException e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Connection failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            }
+    public static void connectToSSH(String ip, String username, String password) {
+        try {
+            // Usa ProcessBuilder per costruire ed eseguire il comando
+            Settings settings = new Settings();
+            String enterDelay = Integer.toString(settings.getEnterDelay());
+            ProcessBuilder processBuilder = new ProcessBuilder("wscript", "./resources/connect_ssh.vbs", ip, username, password, enterDelay);
+            
+            // Esegui il comando
+            Process process = processBuilder.start();
+            
+            // Attendi che il processo termini
+            process.waitFor();
+            
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Connection failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
-    
+    }
 
     public static long pingHost(String ip) {
         try {
@@ -60,6 +61,23 @@ public class HostConnection {
                     });
                 }
             }).start();
+        }
+    }
+
+    public static void closeAllConnections() {
+        try {
+            // Usa ProcessBuilder per costruire ed eseguire il comando
+            ProcessBuilder processBuilder = new ProcessBuilder("wscript", "./resources/close_all_connection.vbs");
+            
+            // Esegui il comando
+            Process process = processBuilder.start();
+            
+            // Attendi che il processo termini
+            process.waitFor();
+            
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(null, "Task failed: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

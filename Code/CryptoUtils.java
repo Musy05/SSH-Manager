@@ -1,5 +1,3 @@
-// CryptoUtils.java
-
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -23,7 +21,7 @@ public class CryptoUtils {
     private static final String PASSWORD_FILE = "password.txt";
     public static boolean isFirstRun = false;
     private static SecretKey secretKey;
-
+    
     public static void checkFirstRun() {
         File passwordFile = new File(PASSWORD_FILE);
         isFirstRun = !passwordFile.exists();
@@ -34,7 +32,7 @@ public class CryptoUtils {
         try {
             byte[] salt = generateSalt();
             Files.write(new File("salt.dat").toPath(), salt);
-            secretKey = getKeyFromPassword(password, salt);
+            getKeyFromPassword(password, salt);
             initializeCrypto(password);
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,7 +42,7 @@ public class CryptoUtils {
     public static void initializeCrypto(String password) {
         try {
             byte[] salt = Files.readAllBytes(new File("salt.dat").toPath());
-            secretKey = getKeyFromPassword(password, salt);
+            getKeyFromPassword(password, salt);
         } catch (Exception e) {
             e.printStackTrace();
         }
